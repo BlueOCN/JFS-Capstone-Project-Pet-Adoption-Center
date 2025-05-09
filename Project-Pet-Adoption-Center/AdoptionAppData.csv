@@ -1,0 +1,21 @@
+PetID,Name,Species,Age,Breed,AdoptionStatus
+f55d3d7d-a089-4e5e-a90b-993d1596ec48,Buddy,Dog,2,Golden Retriever,ADOPTED
+d037656b-7484-4fb0-8b65-6fef982d6a4f,Whiskers,Cat,3,Siamese,AVAILABLE
+a9ef9ca2-f4cf-4bc6-a10b-a0e63363481f,Tweety,Bird,1,Canary,FOSTERED
+d80ef717-d27f-4af0-8556-ff2d396d348d,Luna,Dog,4,Labrador,PENDING_ADOPTION
+009b952d-d9f6-45d7-b99d-2f8b8950174f,Milo,Cat,2,Bengal,ADOPTED
+0daca1da-07d7-4a96-9064-9aa1e9eb5395,Charlie,Bird,5,Parrot,AVAILABLE
+3e8b3126-bfeb-45b4-a04a-813cc109214d,Rex,Dog,6,German Shepherd,UNAVAILABLE
+e4623f2e-71e0-481c-ab00-22cad964704a,Sophie,Cat,1,Persian,PENDING_ADOPTION
+1bd728a0-bf61-42e1-93e4-2f6f0d688529,Coco,Bird,3,Cockatiel,AVAILABLE
+0e3c9dfb-02ba-4a30-b8ba-530797e0f67d,Max,Dog,7,Bulldog,RETURNED
+f5026848-34ae-4b32-87bd-fee54d86ead3,Oscar,Cat,4,Maine Coon,FOSTERED
+45d49bda-4b80-4553-9398-cc9b4da56149,Sunny,Bird,2,Lovebird,ADOPTED
+383a73dc-1cc9-4691-8444-3249ee1b98d7,Bella,Dog,5,Husky,AVAILABLE
+f62df6c0-93c7-4a09-8abe-408f3d9edd25,Tiger,Cat,3,Scottish Fold,ADOPTED
+95e70271-87dc-4a83-81b9-5001beff028c,Zazu,Bird,1,Macaw,UNAVAILABLE
+72bbe125-98c4-4e3d-aa9b-f7d5957873d2,Daisy,Dog,2,Poodle,PENDING_ADOPTION
+1b4a2688-8be3-48c4-b454-5c21f189ad40,Gizmo,Cat,6,Ragdoll,AVAILABLE
+8cea7d6a-caa5-488e-96f7-cd344674513d,Peppy,Bird,4,Finch,FOSTERED
+2df0bded-87b4-408d-b21a-0b3472ec8dff,Bruce,Dog,3,Doberman,ADOPTED
+1cc015f9-9ef3-491b-827e-832058ad9134,Leo,Cat,5,British Shorthair,RETURNED

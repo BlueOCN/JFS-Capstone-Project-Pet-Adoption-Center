@@ -5,6 +5,7 @@ public class Pet implements Adoptable, Vaccinable{
     // Attributes: petId, name, species, age, breed, adoptionStatus
     private String petId;
     private String name;
+    private String species;
     private int age;
     private String breed;
     private String adoptionStatus;
@@ -12,14 +13,25 @@ public class Pet implements Adoptable, Vaccinable{
     Pet(){
         this.petId = UUID.randomUUID().toString();
         this.name = "NA";
+        this.species = "NA";
         this.age = 0;
         this.breed = "NA";
         this.adoptionStatus = "NA";
     }
 
-    Pet(String name, int age, String breed, String adoptionStatus){
+    Pet(String name, String species, int age, String breed, String adoptionStatus){
         this.petId = UUID.randomUUID().toString();
         this.name = name;
+        this.species = species;
+        this.age = age;
+        this.breed = breed;
+        this.adoptionStatus = adoptionStatus;
+    }
+
+    Pet(String petId, String name, String species, int age, String breed, String adoptionStatus){
+        this.petId = petId;
+        this.name = name;
+        this.species = species;
         this.age = age;
         this.breed = breed;
         this.adoptionStatus = adoptionStatus;
@@ -41,6 +53,14 @@ public class Pet implements Adoptable, Vaccinable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public int getAge() {
@@ -70,9 +90,8 @@ public class Pet implements Adoptable, Vaccinable{
     // Interfaces
 
     @Override
-    public void adopt(String adopterName) {
+    public void adopt() {
         this.setAdoptionStatus("ADOPTED");
-        System.out.println(getName() + " has been adopted by " + adopterName + "!");
     }
 
     @Override
@@ -88,6 +107,7 @@ public class Pet implements Adoptable, Vaccinable{
         return "Pet{" +
                 "petId='" + petId + '\'' +
                 ", name='" + name + '\'' +
+                ", species='" + species + '\'' +
                 ", age=" + age +
                 ", breed='" + breed + '\'' +
                 ", adoptionStatus='" + adoptionStatus + '\'' +

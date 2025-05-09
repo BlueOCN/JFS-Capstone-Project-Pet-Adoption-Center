@@ -24,4 +24,52 @@ public class Adopter {
         this.adoptedPetsCollection = new HashSet<>();
     }
 
+    public String getAdopterId() {
+        return adopterId;
+    }
+
+    public void setAdopterId(String adopterId) {
+        this.adopterId = adopterId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public HashSet<Pet> getAdoptedPetsCollection() {
+        return adoptedPetsCollection;
+    }
+
+    public void setAdoptedPetsCollection(HashSet<Pet> adoptedPetsCollection) {
+        this.adoptedPetsCollection = adoptedPetsCollection;
+    }
+
+    public void addAdoptedPet(Pet pet){
+        if (adoptedPetsCollection.contains(pet)){
+            throw new IncorrectInputException("Adopted pet is already taken by this adopter");
+        }
+        this.adoptedPetsCollection.add(pet);
+    }
+
+    @Override
+    public String toString() {
+        return "Adopter{" +
+                "adopterId='" + adopterId + '\'' +
+                ", name='" + name + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
+                ", adoptedPetsCollection=" + adoptedPetsCollection +
+                '}';
+    }
 }
