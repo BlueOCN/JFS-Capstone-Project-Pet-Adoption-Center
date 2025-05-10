@@ -93,6 +93,15 @@ public class PetAdoptionCenter {
     // - Allow adopters to select a pet to adopt
     // - Allow adopters to register as the new owner
     public void registerAdopter(Adopter adopter, Pet pet) {
+        // Check if adopter is null
+        if (adopter == null) {
+            throw new IncorrectInputException("Adopter is null");
+        }
+        // Check is pet is null
+        if (pet == null) {
+            throw new IncorrectInputException("Pet is null");
+        }
+
         // Check if the pet Adoption Status
         if (!pet.getAdoptionStatus().equalsIgnoreCase("AVAILABLE")) {
             throw new IncorrectInputException("Pet is not AVAILABLE");

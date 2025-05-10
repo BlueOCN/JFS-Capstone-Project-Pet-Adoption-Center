@@ -102,6 +102,7 @@ public class Pet implements Adoptable, Vaccinable{
     // Methods
 
 
+
     @Override
     public String toString() {
         return "Pet{" +
