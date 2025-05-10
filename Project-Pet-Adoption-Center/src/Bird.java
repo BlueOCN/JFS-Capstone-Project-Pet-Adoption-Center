@@ -6,14 +6,26 @@ public class Bird extends Pet{
 
     Bird(){
         super();
+        canFly = false;
+        canTalk = false;
     }
 
     Bird(String name, String species, int age, String breed, String adoptionStatus){
         super(name, species, age, breed, adoptionStatus);
+        canFly = false;
+        canTalk = false;
     }
 
     Bird(String id, String name, String species, int age, String breed, String adoptionStatus){
         super(id, name, species, age, breed, adoptionStatus);
+        canFly = false;
+        canTalk = false;
+    }
+
+    Bird(String id, String name, String species, int age, String breed, String adoptionStatus, boolean canFly, boolean canTalk){
+        super(id, name, species, age, breed, adoptionStatus);
+        this.canFly = canFly;
+        this.canTalk = canTalk;
     }
 
     public boolean isCanTalk() {
