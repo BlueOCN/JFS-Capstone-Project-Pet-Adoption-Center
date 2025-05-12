@@ -243,6 +243,8 @@ public class AdoptionApp {
                     if (userInput.equals("2")) {
 
                         String searchChoice;
+                        String petId;
+                        String searchFilter = null;
                         String searchValue = null;
 
                         // Prompt user for search criteria
@@ -254,20 +256,129 @@ public class AdoptionApp {
 
                         // Prompt user for search value
                         if (searchChoice.equals("1")) {
-                            System.out.println("Enter pet Species: ");
+                            System.out.print("Enter pet Species: ");
                             searchValue = scanner.nextLine();
+                            searchFilter = "Species";
                         } else if (searchChoice.equals("2")) {
-                            System.out.println("Enter pet Age: ");
+                            System.out.print("Enter pet Age: ");
                             searchValue = scanner.nextLine();
+                            searchFilter = "Age";
                         }
 
-                        // Find pet TODO modify findPetByFilter
-                        Pet pet = PAC.findPetByFilter(searchChoice,searchValue);
+                        // Display pet that meet the search criteria and value given by the user
+                        PAC.displayPetByFilter(searchFilter, searchValue);
 
-                        // Remove pet TODO implement removal
+                        // Prompt user for pet ID
+                        System.out.print("Enter the pet ID you wish to delete: ");
+                        petId = scanner.nextLine().strip();
+
+                        // Find pet
+                        Pet pet = PAC.findPetById(petId);
+
+                        // Remove pet
+                        PAC.removePet(pet);
                     }
 
                     // if 3 then find pet (search criteria)
+                    if (userInput.equals("3")) {
+
+                        String searchChoice;
+                        String petId;
+                        String searchFilter = null;
+                        String searchValue = null;
+
+                        // Prompt user for search criteria
+                        System.out.println("What search criteria do you want to use?");
+                        System.out.println("1. Species (ie. Dog, Cat, Bird)");
+                        System.out.println("2. Age (ie. 4)");
+                        System.out.print("Please enter a number between 1 and 2: ");
+                        searchChoice = scanner.nextLine();
+
+                        // Prompt user for search value
+                        if (searchChoice.equals("1")) {
+                            System.out.print("Enter pet Species: ");
+                            searchValue = scanner.nextLine();
+                            searchFilter = "Species";
+                        } else if (searchChoice.equals("2")) {
+                            System.out.print("Enter pet Age: ");
+                            searchValue = scanner.nextLine();
+                            searchFilter = "Age";
+                        }
+
+                        // Display pet that meet the search criteria and value given by the user
+                        PAC.displayPetByFilter(searchFilter, searchValue);
+
+                        // Prompt user for pet ID
+                        System.out.print("Enter the ID of the pet you wish to update: ");
+                        petId = scanner.nextLine().strip();
+
+                        // Find pet
+                        Pet pet = PAC.findPetById(petId);
+
+                        // Display pet details
+                        System.out.println(pet);
+
+                        // Create updated pet
+                        Pet updatedPet = pet;
+
+                        // Prompt user for new data
+                        System.out.print("Please enter a new name: ");
+                        userInput = scanner.nextLine().strip();
+                        updatedPet.setName(userInput);
+                        System.out.print("Please enter a new species: ");
+                        userInput = scanner.nextLine().strip();
+                        updatedPet.setSpecies(userInput);
+                        System.out.print("Please enter a new age: ");
+                        userInput = scanner.nextLine().strip();
+                        updatedPet.setAge(Integer.parseInt(userInput));
+                        System.out.print("Please enter a new breed: ");
+                        userInput = scanner.nextLine().strip();
+                        updatedPet.setBreed(userInput);
+                        System.out.print("Please enter a new adoption status: ");
+                        userInput = scanner.nextLine().strip();
+                        updatedPet.setAdoptionStatus(userInput);
+
+                        if (updatedPet instanceof Dog) {
+                            // Update dog object
+                            Dog dog = (Dog) updatedPet;
+
+                            System.out.print("Please enter a new training level: ");
+                            userInput = scanner.nextLine().strip();
+                            dog.setTrainingLevel(userInput);
+                            System.out.print("Please enter a new barking level: ");
+                            userInput = scanner.nextLine().strip();
+                            dog.setBarkingLevel(Integer.parseInt(userInput));
+
+                        } else if (updatedPet instanceof Cat) {
+                            // Update cat object
+                            Cat cat = (Cat) updatedPet;
+
+                            System.out.print("Please enter if cat is indoor [true/false]: ");
+                            userInput = scanner.nextLine().strip();
+                            cat.setIndoor(Boolean.parseBoolean(userInput));
+                            System.out.print("Please enter cat scratching habit level [LOW, MEDIUM, HIGH]: ");
+                            userInput = scanner.nextLine().strip();
+                            cat.setScratchingHabit(userInput);
+
+                        } else if (updatedPet instanceof Bird) {
+                            // Update cat object
+                            Bird bird = (Bird) updatedPet;
+                            System.out.print("Please enter if bird can fly: ");
+                            userInput = scanner.nextLine().strip();
+                            bird.setCanFly(Boolean.parseBoolean(userInput));
+                            System.out.print("Please enter if bird can talk: ");
+                            userInput = scanner.nextLine().strip();
+                            bird.setCanTalk(Boolean.parseBoolean(userInput));
+                        }
+
+                        // Display pet updated details
+                        System.out.println(updatedPet);
+
+                        // Update pet info
+                        PAC.updatePet(updatedPet);
+
+
+                    }
                     //      Prompt user for search criteria
                     //      1. species
                     //      2. age

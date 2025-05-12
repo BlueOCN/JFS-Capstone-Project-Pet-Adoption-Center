@@ -63,6 +63,13 @@ public class Adopter {
         this.adoptedPetsCollection.add(pet);
     }
 
+    public void removeAdoptedPet(Pet pet){
+        if (!adoptedPetsCollection.contains(pet)){
+            throw new IncorrectInputException("Adopted pet is not taken by this adopter");
+        }
+        this.adoptedPetsCollection.remove(pet);
+    }
+
     @Override
     public String toString() {
         return "Adopter{" +

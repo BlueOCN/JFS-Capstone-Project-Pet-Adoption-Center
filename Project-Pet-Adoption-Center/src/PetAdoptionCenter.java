@@ -84,10 +84,51 @@ public class PetAdoptionCenter {
         this.petsCollection.addAll(petsDataSet);
     }
     // - Update pet information on the collection of pets
+    public void updatePet(Pet pet) {
+        if (pet == null){
+            throw new IncorrectInputException("Pet is null");
+        }
+
+        if (!petsCollection.contains(pet)) {
+            throw new IncorrectInputException("Pet is not in the system");
+        }
+
+        for (Adopter adopter : adoptersCollection) {
+            HashSet<Pet> adopterCollection = adopter.getAdoptedPetsCollection();
+            for (Pet targetPet : adopterCollection) {
+                if (pet.equals(targetPet)) {
+                    adopterCollection.remove(targetPet);
+
+                }
+            }
+        }
+
+        // Update the pet on the adopter's collection
+        // Update the pet on the pet collection
+    }
     // - Mark the pet as adopted
     public void updateAdoptionStatus(Pet pet, String status) {}
     // - Remove pets from the system
+    public void removePet(Pet pet) {
 
+        if (pet == null){
+            throw new IncorrectInputException("Pet is null");
+        }
+
+        if (!petsCollection.contains(pet)) {
+            throw new IncorrectInputException("Pet is not in the system");
+        }
+
+        // Remove pet from the user`s pet collection
+        for (Adopter adopter : adoptersCollection) {
+            if (adopter.getAdoptedPetsCollection().contains(pet)) {
+                adopter.removeAdoptedPet(pet);
+            }
+        }
+
+        // Remove pet from the pet collection
+        petsCollection.remove(pet);
+    }
     // Methods from the adoption process
     // - Allow adopters to view available pets
     // - Allow adopters to select a pet to adopt
@@ -120,6 +161,20 @@ public class PetAdoptionCenter {
 
     }
     // - Allow adopters to update the pet`s adoption status
+
+    public Pet findPetById(String petId) {
+
+        if (petId.isEmpty()){
+            throw new IncorrectInputException("Pet id is empty");
+        }
+
+        for (Pet pet : petsCollection) {
+            if (pet.getPetId().equals(petId)) {
+                return pet;
+            }
+        }
+        throw new IncorrectInputException("Pet not found");
+    }
 
     // Search and Filter Pets
     // - Search for pets based on species, age, breed or availability
@@ -170,6 +225,38 @@ public class PetAdoptionCenter {
         for (Pet pet : petsCollection) {
             if (adoptionStatus.equals(pet.getAdoptionStatus())) {
                 System.out.println(pet);
+            }
+        }
+        System.out.println();
+    }
+
+    public void displayPetByFilter(String filter, String value) {
+
+        // Verify fitler is not blank or empty
+        if (filter.isBlank()){
+            throw new IncorrectInputException("Filter is blank or empty");
+        }
+        // Validate value is not blank or empty
+        if (value.isBlank()){
+            throw new IncorrectInputException("Value is blank or empty");
+        }
+        // Assert filter type
+        if(!petFilterTypes.contains(filter.toUpperCase())){
+            throw new IncorrectInputException("Invalid filter");
+        }
+
+        System.out.println();
+        for (Pet pet : petsCollection) {
+            if (filter.equalsIgnoreCase("SPECIES")) {
+                if (pet.getSpecies().equals(value)) {
+                    System.out.println(pet);
+                }
+            } else if (filter.equalsIgnoreCase("Age")) {
+                int age = pet.getAge();
+                int ageInt = Integer.parseInt(value);
+                if (ageInt == age) {
+                    System.out.println(pet);
+                }
             }
         }
         System.out.println();

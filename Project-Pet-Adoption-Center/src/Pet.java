@@ -101,6 +101,13 @@ public class Pet implements Adoptable, Vaccinable{
 
     // Methods
 
+    public void updatePet(String name, String species, int age, String breed, String adoptionStatus){
+        this.setName(name);
+        this.setSpecies(species);
+        this.setAge(age);
+        this.setBreed(breed);
+        this.setAdoptionStatus(adoptionStatus);
+    }
 
 
     @Override
