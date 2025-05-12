@@ -69,45 +69,62 @@ public class PetAdoptionCenter {
     }
 
     // Methods to manage pets
+
     // - Add new pet to the collection of pets
     public void addPet(Pet pet) {
+        if (pet == null) {
+            throw new IllegalArgumentException("Pet cannot be null");
+        }
         if (petsCollection.contains(pet)) {
             throw new IncorrectInputException("Pet is already in the collection");
         }
         this.petsCollection.add(pet);
     }
+
+
     public void addPet(Pet... pet) {
         this.petsCollection.addAll(Arrays.asList(pet));
     }
 
+
     public void addPet(ArrayList<Pet> petsDataSet) {
         this.petsCollection.addAll(petsDataSet);
     }
+
+
     // - Update pet information on the collection of pets
-    public void updatePet(Pet pet) {
-        if (pet == null){
-            throw new IncorrectInputException("Pet is null");
+    public void updatePet(Pet pet, Pet updatedPet) {
+        if (pet == null || updatedPet == null) {
+            throw new IncorrectInputException("Pet or updatedPet is null");
         }
 
         if (!petsCollection.contains(pet)) {
             throw new IncorrectInputException("Pet is not in the system");
         }
 
+        // Find the adopter that contains the pet to be updated
         for (Adopter adopter : adoptersCollection) {
+            // Get adopted pets collection of the adopter
             HashSet<Pet> adopterCollection = adopter.getAdoptedPetsCollection();
+            // Find the pet to be updated
             for (Pet targetPet : adopterCollection) {
+                // If pet is found remove pet from the collection and add the updated pet to the collection
                 if (pet.equals(targetPet)) {
-                    adopterCollection.remove(targetPet);
-
+                    adopterCollection.remove(pet);
+                    adopterCollection.add(updatedPet);
                 }
             }
         }
-
-        // Update the pet on the adopter's collection
         // Update the pet on the pet collection
+        this.petsCollection.remove(pet);
+        this.petsCollection.add(updatedPet);
     }
+
+
     // - Mark the pet as adopted
     public void updateAdoptionStatus(Pet pet, String status) {}
+
+
     // - Remove pets from the system
     public void removePet(Pet pet) {
 
@@ -129,6 +146,8 @@ public class PetAdoptionCenter {
         // Remove pet from the pet collection
         petsCollection.remove(pet);
     }
+
+
     // Methods from the adoption process
     // - Allow adopters to view available pets
     // - Allow adopters to select a pet to adopt
@@ -160,7 +179,7 @@ public class PetAdoptionCenter {
         this.petsCollection.add(updatedPet);
 
     }
-    // - Allow adopters to update the pet`s adoption status
+
 
     public Pet findPetById(String petId) {
 
@@ -175,6 +194,7 @@ public class PetAdoptionCenter {
         }
         throw new IncorrectInputException("Pet not found");
     }
+
 
     // Search and Filter Pets
     // - Search for pets based on species, age, breed or availability
@@ -230,10 +250,11 @@ public class PetAdoptionCenter {
         System.out.println();
     }
 
+
     public void displayPetByFilter(String filter, String value) {
 
         // Verify fitler is not blank or empty
-        if (filter.isBlank()){
+        if (filter.isBlank() || filter == null){
             throw new IncorrectInputException("Filter is blank or empty");
         }
         // Validate value is not blank or empty
@@ -261,6 +282,7 @@ public class PetAdoptionCenter {
         }
         System.out.println();
     }
+
 
     public void displayAdopters() {
         System.out.println();

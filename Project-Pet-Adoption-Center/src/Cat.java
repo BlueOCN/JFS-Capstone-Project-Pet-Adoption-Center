@@ -27,6 +27,18 @@ public class Cat extends Pet {
         super(id, name, species, age, breed, adoptionStatus);
     }
 
+    Cat(String name, String species, int age, String breed, String adoptionStatus, boolean isIndoor, String scratchingHabit){
+        super(name, species, age, breed, adoptionStatus);
+        this.isIndoor = isIndoor;
+        this.scratchingHabit = scratchingHabit;
+
+        // Default Scratching Habit Levels
+        this.scratchingHabitLevels = new HashSet<>();
+        this.scratchingHabitLevels.add("LOW");
+        this.scratchingHabitLevels.add("MEDIUM");
+        this.scratchingHabitLevels.add("HIGH");
+    }
+
     Cat(String id, String name, String species, int age, String breed, String adoptionStatus, boolean isIndoor, String scratchingHabit){
         super(id, name, species, age, breed, adoptionStatus);
         this.isIndoor = isIndoor;

@@ -201,7 +201,11 @@ public class AdoptionApp {
                                petBreed,
                                petAdoptionStatus,
                                dogTrainingLevel,
-                               dogBarkingLevel;
+                               dogBarkingLevel,
+                               isIndoor,
+                               scratchingHabit,
+                                canFly,
+                                canTalk;
 
                         System.out.println("Creating new pet");
                         System.out.print("Enter name of pet you wish to register: ");
@@ -229,18 +233,60 @@ public class AdoptionApp {
                                     petAdoptionStatus,
                                     dogTrainingLevel,
                                     Integer.parseInt(dogBarkingLevel));
+
+                        } else if (petSpecies.equalsIgnoreCase("Cat")) {
+                            System.out.print("Enter if pet is an indoor cat [true/false]: ");
+                            isIndoor = scanner.nextLine();
+                            System.out.print("Enter scratching habit level of the cat you wish to register [LOW/MEDIUM/HIGH]: ");
+                            scratchingHabit = scanner.nextLine();
+
+                            // Create new pet
+                            newPet = new Cat(petName,
+                                    petSpecies,
+                                    Integer.parseInt(petAge),
+                                    petBreed,
+                                    petAdoptionStatus,
+                                    Boolean.parseBoolean(isIndoor),
+                                    scratchingHabit);
+
+                        }
+                        else if (petSpecies.equalsIgnoreCase("Bird")) {
+                            System.out.println("Enter if the bird you wish to register can fly [true/false]: ]");
+                            canFly = scanner.nextLine();
+                            System.out.println("Enter if the bird you wish to register can talk [true/false]: ]");
+                            canTalk = scanner.nextLine();
+
+                            // Create new pet
+                            newPet = new Bird(petName,
+                                    petSpecies,
+                                    Integer.parseInt(petAge),
+                                    petBreed,
+                                    petAdoptionStatus,
+                                    Boolean.parseBoolean(canFly),
+                                    Boolean.parseBoolean(canTalk));
+
+                        }
+                        else {
+                            throw new InvalidPetDataException("Invalid pet data: " + petSpecies);
                         }
 
-                        // Add pet to the system
-                        PAC.addPet(newPet);
+                        try {
+                            // Add pet to the system
+                            PAC.addPet(newPet);
 
-                        // Display pets
-                        PAC.displayPets();
+                            // Display pets
+                            PAC.displayPets();
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        // Go HOME
+                        State = States.HOME;
                     }
 
 
                     // if 2 then find pet (search criteria)
-                    if (userInput.equals("2")) {
+                    else if (userInput.equals("2")) {
 
                         String searchChoice;
                         String petId;
@@ -263,6 +309,8 @@ public class AdoptionApp {
                             System.out.print("Enter pet Age: ");
                             searchValue = scanner.nextLine();
                             searchFilter = "Age";
+                        } else {
+                            throw new InvalidPetDataException("Invalid search criteria: " + searchChoice);
                         }
 
                         // Display pet that meet the search criteria and value given by the user
@@ -272,15 +320,22 @@ public class AdoptionApp {
                         System.out.print("Enter the pet ID you wish to delete: ");
                         petId = scanner.nextLine().strip();
 
-                        // Find pet
-                        Pet pet = PAC.findPetById(petId);
+                        try {
+                            // Find pet
+                            Pet pet = PAC.findPetById(petId);
 
-                        // Remove pet
-                        PAC.removePet(pet);
+                            // Remove pet
+                            PAC.removePet(pet);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        // Go HOME
+                        State = States.HOME;
                     }
 
                     // if 3 then find pet (search criteria)
-                    if (userInput.equals("3")) {
+                    else if (userInput.equals("3")) {
 
                         String searchChoice;
                         String petId;
@@ -371,38 +426,79 @@ public class AdoptionApp {
                             bird.setCanTalk(Boolean.parseBoolean(userInput));
                         }
 
-                        // Display pet updated details
-                        System.out.println(updatedPet);
+                        try {
+                            // Display pet updated details
+                            System.out.println();
+                            System.out.println(updatedPet);
 
-                        // Update pet info
-                        PAC.updatePet(updatedPet);
+                            // Update pet info
+                            PAC.updatePet(pet, updatedPet);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
 
+                        // Go HOME
+                        State = States.HOME;
 
                     }
-                    //      Prompt user for search criteria
-                    //      1. species
-                    //      2. age
-                    //
-                    //      Prompt user for search value
-                    //      Enter pet <criteria>:
-                    //
-                    // and update pet data
-                    //      Prompt user for data to be updated
-                    //      Update the data
 
                     // if 4 then find pet (search criteria)
-                    //      Prompt user for search criteria
-                    //      1. species
-                    //      2. age
-                    //
-                    //      Prompt user for search value
-                    //      Enter pet <criteria>:
-                    // and show pet details
+                    else if (userInput.equals("4")) {
 
-                    // Else Stay in TRACK_PETS
+                        String searchChoice;
+                        String petId;
+                        String searchFilter = null;
+                        String searchValue = null;
 
-                    // Go HOME
-                    State = States.HOME;
+                        // Prompt user for search criteria
+                        System.out.println("What search criteria do you want to use?");
+                        System.out.println("1. Species (ie. Dog, Cat, Bird)");
+                        System.out.println("2. Age (ie. 4)");
+                        System.out.print("Please enter a number between 1 and 2: ");
+                        searchChoice = scanner.nextLine();
+
+                        // Prompt user for search value
+                        if (searchChoice.equals("1")) {
+                            System.out.print("Enter pet Species: ");
+                            searchValue = scanner.nextLine();
+                            searchFilter = "Species";
+                        } else if (searchChoice.equals("2")) {
+                            System.out.print("Enter pet Age: ");
+                            searchValue = scanner.nextLine();
+                            searchFilter = "Age";
+                        } else {
+                            throw new InvalidPetDataException("Invalid search criteria");
+                        }
+
+                        // Display pet that meet the search criteria and value given by the user
+                        PAC.displayPetByFilter(searchFilter, searchValue);
+
+                        // Prompt user for pet ID
+                        System.out.print("Enter the pet ID you wish to see on detail: ");
+                        petId = scanner.nextLine().strip();
+
+                        try {
+                            // Find pet
+                            Pet pet = PAC.findPetById(petId);
+
+                            // Display pet details
+                            System.out.println(pet);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        // Go HOME
+                        State = States.HOME;
+
+                    } else if (userInput.equals("5")) {
+                        State = States.SETUP;
+
+                    } else if (userInput.equals("6")) {
+                        State = States.EXIT;
+
+                    } else {
+                        State = States.TRACK_PETS;
+                    }
 
                     break;
 

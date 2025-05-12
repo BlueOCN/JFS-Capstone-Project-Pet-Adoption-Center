@@ -109,7 +109,6 @@ public class Pet implements Adoptable, Vaccinable{
         this.setAdoptionStatus(adoptionStatus);
     }
 
-
     @Override
     public String toString() {
         return "Pet{" +
