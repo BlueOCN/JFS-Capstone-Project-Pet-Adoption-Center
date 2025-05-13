@@ -20,30 +20,6 @@ public class AdoptionApp {
 
     public static void main(String[] args) {
 
-//        // Registering new adopters and completing adoption transactions
-//        //      Step 1: Allow adopters to view available pets
-//        String searchCriteria = "AVAILABLE";
-//        PAC.displayPets(searchCriteria); // Searching for pets by criteria (e.g., species, age) and displaying the results.
-//
-//        //      Step 2: Allow adopters to select a pet to adopt
-//        Pet selectedPet = PAC.findPetByFilter("Name", "Buddy"); // Searching for pets by criteria (e.g., species, age) and displaying the results.
-//
-//        //      Step 3: Allow adopters to register as the new owner.
-//        Adopter newAdopter1 = new Adopter("J Cole", "5512345678");
-//
-//        // Handling errors gracefully (e.g., trying to adopt a pet that’s already been adopted).
-//        try {
-//            PAC.registerAdopter(newAdopter1, selectedPet);
-//        } catch (IncorrectInputException e) {
-//            System.out.println();
-//            System.out.println(e.getMessage());
-//        }
-//
-//        PAC.displayPets();
-//        PAC.displayAdopters();
-
-
-
         States State = States.IDLE;
 
         String fileName = "./Project-Pet-Adoption-Center/AdoptionAppData.csv";
@@ -362,7 +338,13 @@ public class AdoptionApp {
                         }
 
                         // Display pet that meet the search criteria and value given by the user
-                        PAC.displayPetByFilter(searchFilter, searchValue);
+                        try {
+                            PAC.displayPetByFilter(searchFilter, searchValue);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            State = States.TRACK_PETS;
+                            break;
+                        }
 
                         // Prompt user for pet ID
                         System.out.print("Enter the ID of the pet you wish to update: ");
@@ -498,8 +480,6 @@ public class AdoptionApp {
                     } else if (userInput.equals("6")) {
                         State = States.EXIT;
 
-                    } else {
-                        State = States.TRACK_PETS;
                     }
 
                     break;
@@ -564,6 +544,9 @@ public class AdoptionApp {
                             System.out.println(e.getMessage());
                             break;
                         }
+
+                        // Go home
+                        State = States.HOME;
 
                     }
                     else if (userInput.equals("2")) {
@@ -641,7 +624,6 @@ public class AdoptionApp {
                     }
                     else {
                         System.out.println("Invalid input, please try again");
-                        State = States.TRACK_ADOPTIONS;
                     }
 
                     break;
@@ -650,8 +632,8 @@ public class AdoptionApp {
 
                     // Prompt for action
                     System.out.println("What do you want to do?");
-                    System.out.println("1. Add new pet (add new pet to the system");
-                    System.out.println("2. Register new adopter (Add adopter to the system and link a pet to it");
+                    System.out.println("1. Add new pet (Add new pet to the system");
+                    System.out.println("2. Register new adopter (Add adopter to the system and pet assignment)");
                     System.out.println("3. Find pet by id");
                     System.out.println("4. Find Adopter by id");
                     System.out.println("5. Reset");
@@ -660,10 +642,147 @@ public class AdoptionApp {
                     userInput = scanner.nextLine().strip();
 
                     if (userInput.equals("1")) {
+
+                        Pet newPet = null;
+                        String petName,
+                                petSpecies,
+                                petAge,
+                                petBreed,
+                                petAdoptionStatus,
+                                dogTrainingLevel,
+                                dogBarkingLevel,
+                                isIndoor,
+                                scratchingHabit,
+                                canFly,
+                                canTalk;
+
+                        System.out.println("Creating new pet");
+                        System.out.print("Enter name of pet you wish to register: ");
+                        petName = scanner.nextLine();
+                        System.out.print("Enter species of pet you wish to register: ");
+                        petSpecies = scanner.nextLine();
+                        System.out.print("Enter age of pet you wish to register: ");
+                        petAge = scanner.nextLine();
+                        System.out.print("Enter breed of pet you wish to register: ");
+                        petBreed = scanner.nextLine();
+                        System.out.print("Enter adoption status of pet you wish to register: ");
+                        petAdoptionStatus = scanner.nextLine();
+
+                        if (petSpecies.equalsIgnoreCase("Dog")) {
+                            System.out.print("Enter training level of the dog you wish to register: ");
+                            dogTrainingLevel = scanner.nextLine();
+                            System.out.print("Enter barking level of the dog you wish to register: ");
+                            dogBarkingLevel = scanner.nextLine();
+
+                            // Create new pet
+                            newPet = new Dog(petName,
+                                    petSpecies,
+                                    Integer.parseInt(petAge),
+                                    petBreed,
+                                    petAdoptionStatus,
+                                    dogTrainingLevel,
+                                    Integer.parseInt(dogBarkingLevel));
+
+                        } else if (petSpecies.equalsIgnoreCase("Cat")) {
+                            System.out.print("Enter if pet is an indoor cat [true/false]: ");
+                            isIndoor = scanner.nextLine();
+                            System.out.print("Enter scratching habit level of the cat you wish to register [LOW/MEDIUM/HIGH]: ");
+                            scratchingHabit = scanner.nextLine();
+
+                            // Create new pet
+                            newPet = new Cat(petName,
+                                    petSpecies,
+                                    Integer.parseInt(petAge),
+                                    petBreed,
+                                    petAdoptionStatus,
+                                    Boolean.parseBoolean(isIndoor),
+                                    scratchingHabit);
+
+                        }
+                        else if (petSpecies.equalsIgnoreCase("Bird")) {
+                            System.out.println("Enter if the bird you wish to register can fly [true/false]: ]");
+                            canFly = scanner.nextLine();
+                            System.out.println("Enter if the bird you wish to register can talk [true/false]: ]");
+                            canTalk = scanner.nextLine();
+
+                            // Create new pet
+                            newPet = new Bird(petName,
+                                    petSpecies,
+                                    Integer.parseInt(petAge),
+                                    petBreed,
+                                    petAdoptionStatus,
+                                    Boolean.parseBoolean(canFly),
+                                    Boolean.parseBoolean(canTalk));
+
+                        }
+                        else {
+                            System.out.println("Invalid pet data: " + petSpecies);
+                            break;
+                        }
+
+                        try {
+                            // Add pet to the system
+                            PAC.addPet(newPet);
+
+                            // Display pets
+                            PAC.displayPets();
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        // Go HOME
                         State = States.HOME;
-                        break;
+
                     }
                     else if (userInput.equals("2")) {
+
+                        // Display all available pets
+                        PAC.displayPets("AVAILABLE");
+
+                        // Prompt user for pet ID
+                        System.out.print("Enter the pet ID you wish to adopt: ");
+                        String petId = scanner.nextLine().strip();
+
+                        // Retrieve pet
+                        Pet pet = PAC.findPetById(petId);
+
+                        // Get adopter details
+                        Adopter newAdopter = new Adopter();
+
+                        // Get name
+                        try {
+                            System.out.print("Enter the new adopter name: ");
+                            userInput = scanner.nextLine().strip();
+                            newAdopter.setName(userInput);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            State = States.TRACK_ADOPTIONS;
+                            break;
+                        }
+
+                        // Get number
+                        try {
+                            System.out.print("Enter adopter contact number: ");
+                            userInput = scanner.nextLine().strip();
+                            newAdopter.setContactInfo(userInput);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            State = States.TRACK_ADOPTIONS;
+                            break;
+                        }
+
+
+                        // Register new adopter and assign him a pet
+                        try {
+                            PAC.registerAdopter(newAdopter, pet);
+                            System.out.println(newAdopter);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            State = States.TRACK_ADOPTIONS;
+                            break;
+                        }
+
+                        // Go home
                         State = States.HOME;
                         break;
                     }
@@ -672,6 +791,24 @@ public class AdoptionApp {
                         break;
                     }
                     else if (userInput.equals("4")) {
+
+                        // Display all adopters
+                        PAC.displayAdopters();
+
+                        // Prompt user for pet ID
+                        System.out.print("Enter the adopter ID you wish to find: ");
+                        String adopterId = scanner.nextLine().strip();
+
+                        try {
+                            // Retrieve adopter
+                            Adopter adopter = PAC.findAdopterById(adopterId);
+                            // Display adopter
+                            System.out.println(adopter);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+
                         State = States.HOME;
                         break;
                     }
@@ -685,7 +822,6 @@ public class AdoptionApp {
                     }
                     else {
                         System.out.println("Invalid input, please try again");
-                        State = States.QUICK_QUERIES;
                         break;
                     }
 
