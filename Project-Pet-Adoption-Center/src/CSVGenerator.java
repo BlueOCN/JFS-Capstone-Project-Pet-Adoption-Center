@@ -7,7 +7,7 @@ import java.util.UUID;
 public class CSVGenerator {
     public static void main(String[] args) {
 
-        int totalPets = 5;
+        int totalPets = 10;
         String fileName = "./Project-Pet-Adoption-Center/AdoptionAppData.csv";
 
         ArrayList<String> dataSet = new ArrayList<String>();

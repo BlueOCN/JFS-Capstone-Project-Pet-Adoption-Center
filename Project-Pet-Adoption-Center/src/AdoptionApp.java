@@ -151,7 +151,7 @@ public class AdoptionApp {
                     System.out.println("\nWhat do you want to do?");
                     System.out.println("1. Track pets (Manage pet records)");
                     System.out.println("2. Track adoptions (Manage adoption records)");
-                    System.out.println("3. Quick queries (Provide potential adopters with information about available pets)");
+                    System.out.println("3. Quick queries (Provide quick access to pets and adoptions records)");
                     System.out.println("4. Reset");
                     System.out.println("5. Exit");
                     System.out.print("Please enter a number between 1 and 5: ");
@@ -267,7 +267,8 @@ public class AdoptionApp {
 
                         }
                         else {
-                            throw new InvalidPetDataException("Invalid pet data: " + petSpecies);
+                            System.out.println("Invalid pet data: " + petSpecies);
+                            break;
                         }
 
                         try {
@@ -467,17 +468,18 @@ public class AdoptionApp {
                             searchValue = scanner.nextLine();
                             searchFilter = "Age";
                         } else {
-                            throw new InvalidPetDataException("Invalid search criteria");
+                            System.out.println("Invalid search criteria");
+                            break;
                         }
 
-                        // Display pet that meet the search criteria and value given by the user
-                        PAC.displayPetByFilter(searchFilter, searchValue);
-
-                        // Prompt user for pet ID
-                        System.out.print("Enter the pet ID you wish to see on detail: ");
-                        petId = scanner.nextLine().strip();
-
                         try {
+                            // Display pet that meet the search criteria and value given by the user
+                            PAC.displayPetByFilter(searchFilter, searchValue);
+
+                            // Prompt user for pet ID
+                            System.out.print("Enter the pet ID you wish to see on detail: ");
+                            petId = scanner.nextLine().strip();
+
                             // Find pet
                             Pet pet = PAC.findPetById(petId);
 
@@ -491,7 +493,7 @@ public class AdoptionApp {
                         State = States.HOME;
 
                     } else if (userInput.equals("5")) {
-                        State = States.SETUP;
+                        State = States.RESET;
 
                     } else if (userInput.equals("6")) {
                         State = States.EXIT;
@@ -501,6 +503,191 @@ public class AdoptionApp {
                     }
 
                     break;
+
+                case TRACK_ADOPTIONS:
+
+                    // Show a table of all pets
+                    PAC.displayAdopters();
+
+                    // Prompt for action
+                    System.out.println("What do you want to do?");
+                    System.out.println("1. Create new adopter (Register new adopters)");
+                    System.out.println("2. Remove an adopter (Delete adopter)");
+                    System.out.println("3. Update an adopter (Modify adopter information)");
+                    System.out.println("4. Read an adopter (Display adopter details)");
+                    System.out.println("5. Reset");
+                    System.out.println("6. Exit");
+                    System.out.print("Please enter a number between 1 and 6: ");
+                    userInput = scanner.nextLine().strip();
+
+                    // Create a new adopter
+                    if (userInput.equals("1")) {
+
+                        // Display all available pets
+                        PAC.displayPets("AVAILABLE");
+
+                        // Prompt user for pet ID
+                        System.out.print("Enter the pet ID you wish to adopt: ");
+                        String petId = scanner.nextLine().strip();
+
+                        // Retrieve pet
+                        Pet pet = PAC.findPetById(petId);
+
+                        // Get adopter details
+                        Adopter newAdopter = new Adopter();
+
+                        // Get name
+                        try {
+                            System.out.print("Enter the new adopter name: ");
+                            userInput = scanner.nextLine().strip();
+                            newAdopter.setName(userInput);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+
+                        // Get number
+                        try {
+                            System.out.print("Enter adopter contact number: ");
+                            userInput = scanner.nextLine().strip();
+                            newAdopter.setContactInfo(userInput);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+
+
+                        // Register new adopter and assign him a pet
+                        try {
+                            PAC.registerAdopter(newAdopter, pet);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+
+                    }
+                    else if (userInput.equals("2")) {
+
+                        // Display adopters
+                        PAC.displayAdopters();
+
+                        // Prompt user for adopter ID
+                        System.out.print("Enter the adopter ID you wish to delete: ");
+                        String adopterId = scanner.nextLine().strip();
+
+                        // Get adopter
+                        Adopter adopter = PAC.findAdopterById(adopterId);
+
+                        // Remove adopter
+                        PAC.removeAdopter(adopter);
+
+                        // Notify the user
+                        System.out.println("Deleted adopter " + adopterId);
+
+                        // Go home
+                        State = States.HOME;
+                        break;
+                    }
+                    else if (userInput.equals("3")) {
+
+                        // Display adopters
+                        PAC.displayAdopters();
+
+                        // Prompt user for adopter ID
+                        System.out.print("Enter the adopter ID you wish to update: ");
+                        String adopterId = scanner.nextLine().strip();
+
+                        // Get adopter
+                        Adopter adopter = PAC.findAdopterById(adopterId);
+
+                        System.out.print("Enter adopter updated name: ");
+                        String newAdopterName = scanner.nextLine().strip();
+                        adopter.setName(newAdopterName);
+
+                        System.out.print("Enter adopter updated contact number: ");
+                        String newAdopterContact = scanner.nextLine().strip();
+                        adopter.setContactInfo(newAdopterContact);
+
+                        System.out.println(adopter);
+
+                        State = States.HOME;
+                        break;
+
+                    }
+                    else if (userInput.equals("4")) {
+
+                        // Display adopters
+                        PAC.displayAdopters();
+
+                        // Prompt user for adopter ID
+                        System.out.print("Enter the adopter ID you wish to update: ");
+                        String adopterId = scanner.nextLine().strip();
+
+                        // Get adopter
+                        Adopter adopter = PAC.findAdopterById(adopterId);
+
+                        // Display details
+                        System.out.println(adopter);
+
+                        State = States.HOME;
+                        break;
+
+                    }
+                    else if (userInput.equals("5")) {
+                        State = States.RESET;
+                    }
+                    else if (userInput.equals("6")) {
+                        State = States.EXIT;
+                    }
+                    else {
+                        System.out.println("Invalid input, please try again");
+                        State = States.TRACK_ADOPTIONS;
+                    }
+
+                    break;
+
+                case QUICK_QUERIES:
+
+                    // Prompt for action
+                    System.out.println("What do you want to do?");
+                    System.out.println("1. Add new pet (add new pet to the system");
+                    System.out.println("2. Register new adopter (Add adopter to the system and link a pet to it");
+                    System.out.println("3. Find pet by id");
+                    System.out.println("4. Find Adopter by id");
+                    System.out.println("5. Reset");
+                    System.out.println("6. Exit");
+                    System.out.print("Please enter a number between 1 and 6: ");
+                    userInput = scanner.nextLine().strip();
+
+                    if (userInput.equals("1")) {
+                        State = States.HOME;
+                        break;
+                    }
+                    else if (userInput.equals("2")) {
+                        State = States.HOME;
+                        break;
+                    }
+                    else if (userInput.equals("3")) {
+                        State = States.HOME;
+                        break;
+                    }
+                    else if (userInput.equals("4")) {
+                        State = States.HOME;
+                        break;
+                    }
+                    else if (userInput.equals("5")) {
+                        State = States.RESET;
+                        break;
+                    }
+                    else if (userInput.equals("6")) {
+                        State = States.EXIT;
+                        break;
+                    }
+                    else {
+                        System.out.println("Invalid input, please try again");
+                        State = States.QUICK_QUERIES;
+                        break;
+                    }
 
                 case RESET:
 

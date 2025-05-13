@@ -37,6 +37,9 @@ public class Adopter {
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
         this.name = name;
     }
 
@@ -45,6 +48,9 @@ public class Adopter {
     }
 
     public void setContactInfo(String contactInfo) {
+        if (contactInfo == null || contactInfo.isEmpty()){
+            throw new IllegalArgumentException("Contact info cannot be null or empty");
+        }
         this.contactInfo = contactInfo;
     }
 

@@ -149,9 +149,6 @@ public class PetAdoptionCenter {
 
 
     // Methods from the adoption process
-    // - Allow adopters to view available pets
-    // - Allow adopters to select a pet to adopt
-    // - Allow adopters to register as the new owner
     public void registerAdopter(Adopter adopter, Pet pet) {
         // Check if adopter is null
         if (adopter == null) {
@@ -178,6 +175,13 @@ public class PetAdoptionCenter {
         this.petsCollection.remove(pet);
         this.petsCollection.add(updatedPet);
 
+    }
+
+    public void removeAdopter(Adopter adopter) {
+        if (adopter == null) {
+            throw new IncorrectInputException("Adopter is null");
+        }
+        this.adoptersCollection.remove(adopter);
     }
 
 
@@ -228,6 +232,22 @@ public class PetAdoptionCenter {
             }
         }
         return null;
+    }
+
+    public Adopter findAdopterById(String adopterId) {
+        if (adopterId.isEmpty()){
+            throw new IncorrectInputException("Adopter id is empty");
+        }
+        if (adoptersCollection.isEmpty()) {
+            throw new IncorrectInputException("Adopters collection is empty");
+        }
+
+        for (Adopter adopter : adoptersCollection) {
+            if (adopter.getAdopterId().equals(adopterId)) {
+                return adopter;
+            }
+        }
+        throw new IncorrectInputException("Adopter not found");
     }
 
 
