@@ -24,6 +24,13 @@ public class Adopter {
         this.adoptedPetsCollection = new HashSet<>();
     }
 
+    public Adopter(String id, String name, String contactInfo){
+        this.adopterId = id;
+        this.name = name;
+        this.contactInfo = contactInfo;
+        this.adoptedPetsCollection = new HashSet<>();
+    }
+
     public String getAdopterId() {
         return adopterId;
     }

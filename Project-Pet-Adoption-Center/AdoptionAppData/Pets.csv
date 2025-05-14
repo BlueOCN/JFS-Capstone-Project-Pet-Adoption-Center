@@ -1,0 +1,9 @@
+PetID,Name,Species,Age,Breed,AdoptionStatus,AdopterID,A,B
+4ba17cb1-3f98-4db9-add4-51be0a1cdfbb,Misty,Cat,8,Great Dane,ADOPTED,4fd53d11-d7e9-49a6-a522-de873a7eeeb0,true,MEDIUM
+f773278a-75c1-4451-aeb8-1d9c41b5666f,Daisy,Bird,2,Samoyed,ADOPTED,012d41cc-cf6c-4436-997a-549e9dfb91d9,false,true
+35e7d6db-ce83-472c-aeb9-73401e9a603b,Bailey,Bird,2,American Bulldog,ADOPTED,0ee35c3d-da13-450a-b4d8-1722dce20a80,true,false
+c5437c4a-14d2-4b16-8688-1176713df710,Mittens,Bird,15,Dalmatian,ADOPTED,3ca78fd3-aa29-40a0-9d06-647e913e9d73,false,true
+02b0cf9f-c154-401b-9de6-f9c681dd1de8,Finn,Cat,11,Sphynx,FOSTERED,,false,LOW
+9947b18d-9b05-4255-8ca3-f405247e8ebf,Oliver,Cat,2,Norwegian Forest,AVAILABLE,,false,LOW
+6b929f9f-471b-48ca-b32a-685dd10bfcb1,Snickers,Bird,16,Maltese,RETURNED,,false,true
+97742905-9119-485c-88be-b5e5c55da9ce,Rusty,Dog,6,Cornish Rex,FOSTERED,,MEDIUM,4

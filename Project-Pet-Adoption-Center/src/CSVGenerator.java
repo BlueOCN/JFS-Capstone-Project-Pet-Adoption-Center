@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,18 +9,49 @@ import java.util.UUID;
 public class CSVGenerator {
     public static void main(String[] args) {
 
-        int totalPets = 10;
-        String fileName = "./Project-Pet-Adoption-Center/AdoptionAppData.csv";
+        int AdopterPetPairs = 4;
+        ArrayList<String> pets = new ArrayList<>();
+        ArrayList<String> adopters = new ArrayList<>();
 
-        ArrayList<String> dataSet = new ArrayList<String>();
-        dataSet.add("Pet Adoption Center");
-        dataSet.add("PetID,Name,Species,Age,Breed,AdoptionStatus");
-        for (int i = 0; i < totalPets; i++) {
-            dataSet.add(generateRandomRow());
+        for (int i = 0; i < AdopterPetPairs; i++) {
+            String randomAdopterId = UUID.randomUUID().toString();
+            String randomAdopter = randomAdopterId + "," +
+                    genUniqueRandomName() + "," +
+                    genRandomContactInfo();
+
+
+            String species = genRandomSpecies();
+            String randomPet = UUID.randomUUID().toString() + "," +
+                    genUniqueRandomName() + "," +
+                    species + "," +
+                    genRandomAge() + "," +
+                    genRandomBreed() + "," +
+                    "ADOPTED," +
+                    randomAdopterId;
+
+            switch(species){
+                case "Dog":
+                    String dogData = "," + genRandomTrainingLevel() + "," + genRandomBarkingLevel();
+                    randomPet = randomPet.concat(dogData);
+                    break;
+
+                case "Cat":
+                    String catData = "," + genRandomIsIndoor() + "," + genRandomScratchingHabitLevel();
+                    randomPet = randomPet.concat(catData);
+                    break;
+
+                case "Bird":
+                    String birdData = "," + genRandomCanFly() + "," + genRandomCanTalk();
+                    randomPet = randomPet.concat(birdData);
+                    break;
+            }
+            pets.add(randomPet);
+            adopters.add(randomAdopter);
         }
 
-        try (FileWriter writer = new FileWriter(fileName)) {
-            for (String line : dataSet) {
+        try (FileWriter writer = new FileWriter("./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv")) {
+            writer.write("PetID,Name,Species,Age,Breed,AdoptionStatus,AdopterID,A,B\n");
+            for (String line : pets) {
                 writer.write(line + "\n");
             }
             System.out.println("CSV file created successfully!");
@@ -26,6 +59,191 @@ public class CSVGenerator {
             System.out.println("Error writing to file.");
             e.printStackTrace();
         }
+
+        try (FileWriter writer = new FileWriter("./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv")) {
+            writer.write("AdopterId,Name,ContactInfo\n");
+            for (String line : adopters) {
+                writer.write(line + "\n");
+            }
+            System.out.println("CSV file created successfully!");
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+            e.printStackTrace();
+        }
+
+        pets.clear();
+
+        for (int i = 0; i < AdopterPetPairs; i++) {
+            String species = genRandomSpecies();
+            String randomPet = UUID.randomUUID().toString() + "," +
+                    genUniqueRandomName() + "," +
+                    species + "," +
+                    genRandomAge() + "," +
+                    genRandomBreed() + "," +
+                    genRandomAdoptionStatus() + "," +
+                    "";
+
+            switch(species){
+                case "Dog":
+                    String dogData = "," + genRandomTrainingLevel() + "," + genRandomBarkingLevel();
+                    randomPet = randomPet.concat(dogData);
+                    break;
+
+                case "Cat":
+                    String catData = "," + genRandomIsIndoor() + "," + genRandomScratchingHabitLevel();
+                    randomPet = randomPet.concat(catData);
+                    break;
+
+                case "Bird":
+                    String birdData = "," + genRandomCanFly() + "," + genRandomCanTalk();
+                    randomPet = randomPet.concat(birdData);
+                    break;
+            }
+
+            pets.add(randomPet);
+        }
+
+        try (FileWriter writer = new FileWriter("./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv", true)) {
+            for (String line : pets) {
+                writer.write(line + "\n");
+            }
+            System.out.println("CSV file updated successfully!");
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+            e.printStackTrace();
+        }
+
+
+
+        // Setup data
+        ArrayList<Pet> petsDataSet = new ArrayList<>();
+
+        // Load data from csv file on program restart.
+        try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv"))) {
+
+            String line;
+            Pet pet;
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.startsWith("Pet")){
+                    continue;
+                }
+
+                String[] values = line.split(","); // Split by comma
+                if ("DOG".equalsIgnoreCase(values[2])) {
+                    pet = new Dog(values[0],
+                            values[1],
+                            values[2],
+                            Integer.parseInt(values[3]),
+                            values[4],
+                            values[5],
+                            values[7],
+                            Integer.parseInt(values[8]));
+
+                    petsDataSet.add(pet);
+                }
+                else if ("CAT".equalsIgnoreCase(values[2])) {
+                    pet = new Cat(values[0],
+                            values[1],
+                            values[2],
+                            Integer.parseInt(values[3]),
+                            values[4],
+                            values[5],
+                            Boolean.parseBoolean(values[7]),
+                            values[8]);
+                    petsDataSet.add(pet);
+                }
+                else if ("BIRD".equalsIgnoreCase(values[2])) {
+                    pet = new Bird(values[0],
+                            values[1],
+                            values[2],
+                            Integer.parseInt(values[3]),
+                            values[4],
+                            values[5],
+                            Boolean.parseBoolean(values[7]),
+                            Boolean.parseBoolean(values[8]));
+                    petsDataSet.add(pet);
+                }
+                else {
+                    throw new InvalidPetDataException("Invalid pet data: " + values[2]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file.");
+            e.printStackTrace();
+        }
+
+        System.out.println(petsDataSet);
+
+
+        ArrayList<Adopter> adoptersData = new ArrayList<>();
+        // Load data from csv file on program restart.
+        try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv"))) {
+
+            String line;
+            Adopter adopter;
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.startsWith("Adopter")) {
+                    continue;
+                }
+
+                String[] values = line.split(","); // Split by comma
+
+                adopter = new Adopter(values[0], values[1], values[2]);
+                adoptersData.add(adopter);
+            }
+
+            } catch (IOException e) {
+            System.out.println("Error reading the file.");
+            e.printStackTrace();
+        }
+
+        System.out.println(adoptersData);
+
+
+
+    }
+
+    private static String generateRandomRow2() {
+
+        String row = UUID.randomUUID().toString() + "," +
+                genUniqueRandomName() + "," +
+                genRandomContactInfo() + "," +
+                genAdoptedPets();
+        return row;
+    }
+
+    private static String genAdoptedPets() {
+
+        String row;
+        int rand = new Random().nextInt(0,5);
+
+        ArrayList<String> petList = new ArrayList<>();
+
+        for (int i = 0; i < rand; i++) {
+            row = generateRandomRow();
+            String[] parsed = row.split(",");
+            if ("ADOPTED".equals(parsed[5])){
+                petList.add(parsed[0]);
+            }
+        }
+
+        System.out.println(petList);
+
+        return petList.toString();
+
+    }
+
+    private static String genRandomContactInfo() {
+        Random random = new Random();
+        int areaCode = random.nextInt(900) + 100; // Ensures a 3-digit area code
+        int centralOfficeCode = random.nextInt(900) + 100; // Ensures a 3-digit exchange code
+        int lineNumber = random.nextInt(10000); // Ensures a 4-digit line number
+
+        return String.format("(%d) %d-%04d", areaCode, centralOfficeCode, lineNumber);
     }
 
 
@@ -157,8 +375,9 @@ public class CSVGenerator {
     public static String genRandomAdoptionStatus(){
         String adoptionStatus;
         Random random = new Random();
-        String[] ADOPTION_TYPES = { "AVAILABLE", "PENDING_ADOPTION", "ADOPTED", "RETURNED", "FOSTERED", "UNAVAILABLE" };
+        String[] ADOPTION_TYPES = { "AVAILABLE", "PENDING_ADOPTION", "RETURNED", "FOSTERED", "UNAVAILABLE" };
         adoptionStatus = ADOPTION_TYPES[random.nextInt(ADOPTION_TYPES.length)];
         return adoptionStatus;
     }
+
 }

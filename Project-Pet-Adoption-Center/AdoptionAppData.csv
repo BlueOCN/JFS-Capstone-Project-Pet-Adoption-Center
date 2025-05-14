@@ -1,12 +1,12 @@
 Pet Adoption Center
-PetID,Name,Species,Age,Breed,AdoptionStatus
-0b7dfeae-f2d4-474a-b690-ded62e0e2b88,Sunny,Bird,17,Weimaraner,AVAILABLE,false,false
-61dc8be0-eeb7-448a-83b7-006c565770a9,Rex,Dog,9,Persian,FOSTERED,LOW,2
-4ed536ea-fa86-4da4-981b-83752baa1b82,Boomer,Bird,19,Russian Blue,UNAVAILABLE,false,true
-4b4a96ca-2e00-4517-8978-be255d3f7065,Nugget,Cat,18,Maltese,FOSTERED,false,HIGH
-fb308917-8d87-419a-a1aa-6ea1b401a0cf,Clover,Cat,13,Akita,FOSTERED,true,LOW
-58ec8cd4-310c-4b0a-8d81-7efedf97177f,Rex,Cat,3,Weimaraner,ADOPTED,true,MEDIUM
-370a75c9-9984-4d62-a006-d56965088129,Cloud,Bird,18,Norwegian Forest,UNAVAILABLE,false,true
-a42d694e-29bf-4c98-99e9-0fbb0e2a2def,Whiskers,Cat,4,Samoyed,PENDING_ADOPTION,true,LOW
-eba7719b-2225-42fe-bfb4-8096ee015091,Finn,Dog,14,Akita,RETURNED,HIGH,1
-dc59e3c7-158c-42af-a237-32fc7f4ea915,Mocha,Dog,14,Beagle,ADOPTED,LOW,4
+PetID,Name,Species,Age,Breed,AdoptionStatus,AdopterID
+6e82f224-ef13-4f41-a862-f4df93028608,Fudge,Cat,20,Golden Retriever,FOSTERED,false,HIGH
+88aee00e-b1ce-42c6-98e9-97189a6f6611,Max,Cat,8,Oriental Shorthair,PENDING_ADOPTION,false,HIGH
+8a8b117d-c812-4246-9753-da6eb401190c,Jasper,Bird,14,Akita,RETURNED,true,true
+73ae9a2a-1160-424b-b2a0-959684099f5d,Tango,Cat,22,Cocker Spaniel,UNAVAILABLE,false,MEDIUM
+ed345598-ed02-4a54-b63d-946edd150373,Buttercup,Bird,23,Papillon,FOSTERED,false,false
+1d06aac1-8443-43e3-a94c-ecf45d899ff0,Pepper,Bird,1,Oriental Shorthair,FOSTERED,false,true
+06ced84f-896a-494b-bba8-ccbb75e7c792,Bailey,Cat,20,Norwegian Forest,FOSTERED,true,MEDIUM
+f023bb15-8bb8-42e0-a312-934801eafa40,Loki,Bird,13,Scottish Fold,UNAVAILABLE,true,true
+58380434-83c1-4964-98f9-a0fb9ef11512,Sunny,Bird,17,Sphynx,FOSTERED,false,true
+9983acbe-6788-4f9e-8811-4260c783acec,Mochi,Dog,8,Canary,UNAVAILABLE,MEDIUM,6
