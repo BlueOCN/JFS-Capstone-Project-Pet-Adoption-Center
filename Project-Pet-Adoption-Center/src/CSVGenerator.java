@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
@@ -115,8 +116,43 @@ public class CSVGenerator {
 
 
 
-        // Setup data
-        ArrayList<Pet> petsDataSet = new ArrayList<>();
+
+        // Import Adopters
+
+        // Store adopters in a hashmap
+        HashMap<String, Adopter> adoptersMap = new HashMap<>();
+
+        // Load data from csv file on program restart.
+        try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv"))) {
+
+            String line;
+            Adopter adopter;
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.startsWith("Adopter")) {
+                    continue;
+                }
+
+                String[] values = line.split(","); // Split by comma
+
+                adopter = new Adopter(values[0], values[1], values[2]);
+                adoptersMap.put(values[0], adopter);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading the file.");
+            e.printStackTrace();
+        }
+
+        System.out.println(adoptersMap);
+        System.out.println();
+
+
+
+        // Import pets:
+        // Store pets in a hashmap
+        HashMap<String, Pet> petsMap = new HashMap<>();
 
         // Load data from csv file on program restart.
         try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv"))) {
@@ -141,7 +177,12 @@ public class CSVGenerator {
                             values[7],
                             Integer.parseInt(values[8]));
 
-                    petsDataSet.add(pet);
+                    petsMap.put(values[0], pet);
+
+                    if (adoptersMap.containsKey(values[6])) {
+                        Adopter adopter = adoptersMap.get(values[6]);
+                        adopter.addAdoptedPet(pet);
+                    }
                 }
                 else if ("CAT".equalsIgnoreCase(values[2])) {
                     pet = new Cat(values[0],
@@ -152,7 +193,12 @@ public class CSVGenerator {
                             values[5],
                             Boolean.parseBoolean(values[7]),
                             values[8]);
-                    petsDataSet.add(pet);
+                    petsMap.put(values[0], pet);
+
+                    if (adoptersMap.containsKey(values[6])) {
+                        Adopter adopter = adoptersMap.get(values[6]);
+                        adopter.addAdoptedPet(pet);
+                    }
                 }
                 else if ("BIRD".equalsIgnoreCase(values[2])) {
                     pet = new Bird(values[0],
@@ -163,7 +209,12 @@ public class CSVGenerator {
                             values[5],
                             Boolean.parseBoolean(values[7]),
                             Boolean.parseBoolean(values[8]));
-                    petsDataSet.add(pet);
+                    petsMap.put(values[0], pet);
+
+                    if (adoptersMap.containsKey(values[6])) {
+                        Adopter adopter = adoptersMap.get(values[6]);
+                        adopter.addAdoptedPet(pet);
+                    }
                 }
                 else {
                     throw new InvalidPetDataException("Invalid pet data: " + values[2]);
@@ -174,34 +225,12 @@ public class CSVGenerator {
             e.printStackTrace();
         }
 
-        System.out.println(petsDataSet);
+        System.out.println(petsMap);
+        System.out.println();
+        System.out.println(adoptersMap);
+        System.out.println();
 
-
-        ArrayList<Adopter> adoptersData = new ArrayList<>();
-        // Load data from csv file on program restart.
-        try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv"))) {
-
-            String line;
-            Adopter adopter;
-
-            while ((line = br.readLine()) != null) {
-
-                if (line.startsWith("Adopter")) {
-                    continue;
-                }
-
-                String[] values = line.split(","); // Split by comma
-
-                adopter = new Adopter(values[0], values[1], values[2]);
-                adoptersData.add(adopter);
-            }
-
-            } catch (IOException e) {
-            System.out.println("Error reading the file.");
-            e.printStackTrace();
-        }
-
-        System.out.println(adoptersData);
+        System.out.println(petsMap);
 
 
 

@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class AdoptionApp {
@@ -40,11 +41,45 @@ public class AdoptionApp {
 
                 case States.SETUP:
 
-                    // Setup data
-                    petsDataSet = new ArrayList<>();
+                    // Import Pet Adoption App Data from CSV files
+
+
+                    // Import Adopters:
+                    // Store adopters in a hashmap
+                    HashMap<String, Adopter> adoptersMap = new HashMap<>();
 
                     // Load data from csv file on program restart.
-                    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                    try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv"))) {
+
+                        String line;
+                        Adopter adopter;
+
+                        while ((line = br.readLine()) != null) {
+
+                            if (line.startsWith("Adopter")) {
+                                continue;
+                            }
+
+                            String[] values = line.split(","); // Split by comma
+
+                            adopter = new Adopter(values[0], values[1], values[2]);
+                            adoptersMap.put(values[0], adopter);
+                        }
+
+                    } catch (IOException e) {
+                        System.out.println("Error reading the file.");
+                        e.printStackTrace();
+                    }
+
+                    System.out.println(adoptersMap);
+                    System.out.println();
+
+                    // Import pets:
+                    // Store pets in a hashmap
+                    HashMap<String, Pet> petsMap = new HashMap<>();
+
+                    // Load data from csv file on program restart.
+                    try (BufferedReader br = new BufferedReader(new FileReader("./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv"))) {
 
                         String line;
                         Pet pet;
@@ -63,9 +98,15 @@ public class AdoptionApp {
                                         Integer.parseInt(values[3]),
                                         values[4],
                                         values[5],
-                                        values[6],
-                                        Integer.parseInt(values[7]));
-                                petsDataSet.add(pet);
+                                        values[7],
+                                        Integer.parseInt(values[8]));
+
+                                petsMap.put(values[0], pet);
+
+                                if (adoptersMap.containsKey(values[6])) {
+                                    Adopter adopter = adoptersMap.get(values[6]);
+                                    adopter.addAdoptedPet(pet);
+                                }
                             }
                             else if ("CAT".equalsIgnoreCase(values[2])) {
                                 pet = new Cat(values[0],
@@ -74,9 +115,14 @@ public class AdoptionApp {
                                         Integer.parseInt(values[3]),
                                         values[4],
                                         values[5],
-                                        Boolean.parseBoolean(values[6]),
-                                        values[7]);
-                                petsDataSet.add(pet);
+                                        Boolean.parseBoolean(values[7]),
+                                        values[8]);
+                                petsMap.put(values[0], pet);
+
+                                if (adoptersMap.containsKey(values[6])) {
+                                    Adopter adopter = adoptersMap.get(values[6]);
+                                    adopter.addAdoptedPet(pet);
+                                }
                             }
                             else if ("BIRD".equalsIgnoreCase(values[2])) {
                                 pet = new Bird(values[0],
@@ -85,9 +131,14 @@ public class AdoptionApp {
                                         Integer.parseInt(values[3]),
                                         values[4],
                                         values[5],
-                                        Boolean.parseBoolean(values[6]),
-                                        Boolean.parseBoolean(values[7]));
-                                petsDataSet.add(pet);
+                                        Boolean.parseBoolean(values[7]),
+                                        Boolean.parseBoolean(values[8]));
+                                petsMap.put(values[0], pet);
+
+                                if (adoptersMap.containsKey(values[6])) {
+                                    Adopter adopter = adoptersMap.get(values[6]);
+                                    adopter.addAdoptedPet(pet);
+                                }
                             }
                             else {
                                 throw new InvalidPetDataException("Invalid pet data: " + values[2]);
@@ -98,11 +149,18 @@ public class AdoptionApp {
                         e.printStackTrace();
                     }
 
+                    System.out.println(petsMap);
+                    System.out.println();
+                    System.out.println(adoptersMap);
+                    System.out.println();
+
+
                     // Create and Initiate Pet Adoption Center
                     PAC = new PetAdoptionCenter();
 
                     // Load data to the Pet Adoption Center
-                    PAC.addPet(petsDataSet);
+                    PAC.importAdopters(adoptersMap);
+                    PAC.importPets(petsMap);
 
                     // Welcome message
                     System.out.println("\nWelcome to the Pet Adoption Center.");

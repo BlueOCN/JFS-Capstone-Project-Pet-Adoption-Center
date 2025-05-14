@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class PetAdoptionCenter {
@@ -91,6 +92,10 @@ public class PetAdoptionCenter {
         this.petsCollection.addAll(petsDataSet);
     }
 
+    public void importPets(HashMap<String, Pet> petHashMap) {
+        this.petsCollection.addAll(petHashMap.values());
+    }
+
 
     // - Update pet information on the collection of pets
     public void updatePet(Pet pet, Pet updatedPet) {
@@ -147,6 +152,9 @@ public class PetAdoptionCenter {
         petsCollection.remove(pet);
     }
 
+    public void importAdopters(HashMap<String, Adopter> adopterHashMap) {
+        this.adoptersCollection.addAll(adopterHashMap.values());
+    }
 
     // Methods from the adoption process
     public void registerAdopter(Adopter adopter, Pet pet) {
