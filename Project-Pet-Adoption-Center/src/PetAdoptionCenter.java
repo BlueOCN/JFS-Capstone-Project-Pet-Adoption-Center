@@ -258,6 +258,20 @@ public class PetAdoptionCenter {
         throw new IncorrectInputException("Adopter not found");
     }
 
+    public Adopter findAdopterByPetId(String petId) {
+        if (petId.isEmpty()){
+            throw new IncorrectInputException("Pet id is empty");
+        }
+        for (Adopter adopter : adoptersCollection) {
+            for (Pet pet : adopter.getAdoptedPetsCollection()) {
+                if (pet.getPetId().equals(petId)) {
+                    return adopter;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void displayPets() {
         System.out.println();

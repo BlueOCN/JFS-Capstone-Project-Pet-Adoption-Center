@@ -1,16 +1,10 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 
 public class CSVGenerator {
     public static void main(String[] args) {
 
-        int AdopterPetPairs = 4;
+        int AdopterPetPairs = 15;
         ArrayList<String> pets = new ArrayList<>();
         ArrayList<String> adopters = new ArrayList<>();
 
@@ -232,6 +226,8 @@ public class CSVGenerator {
 
         System.out.println(petsMap);
 
+
+        // Data export
 
 
     }

@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -23,8 +21,8 @@ public class AdoptionApp {
 
         States State = States.IDLE;
 
-        String fileName = "./Project-Pet-Adoption-Center/AdoptionAppData.csv";
-        ArrayList<Pet> petsDataSet;
+        String petsFilename = "./Project-Pet-Adoption-Center/AdoptionAppData/Pets.csv";
+        String adoptersFilename = "./Project-Pet-Adoption-Center/AdoptionAppData/Adopters.csv";
 
         PetAdoptionCenter PAC = null;
         String userInput;
@@ -70,9 +68,6 @@ public class AdoptionApp {
                         System.out.println("Error reading the file.");
                         e.printStackTrace();
                     }
-
-                    System.out.println(adoptersMap);
-                    System.out.println();
 
                     // Import pets:
                     // Store pets in a hashmap
@@ -148,12 +143,6 @@ public class AdoptionApp {
                         System.out.println("Error reading the file.");
                         e.printStackTrace();
                     }
-
-                    System.out.println(petsMap);
-                    System.out.println();
-                    System.out.println(adoptersMap);
-                    System.out.println();
-
 
                     // Create and Initiate Pet Adoption Center
                     PAC = new PetAdoptionCenter();
@@ -569,7 +558,13 @@ public class AdoptionApp {
                         String petId = scanner.nextLine().strip();
 
                         // Retrieve pet
-                        Pet pet = PAC.findPetById(petId);
+                        Pet pet = null;
+                        try {
+                            pet = PAC.findPetById(petId);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
 
                         // Get adopter details
                         Adopter newAdopter = new Adopter();
@@ -910,50 +905,81 @@ public class AdoptionApp {
                     System.out.println("\nShutting down...");
 
                     // Saving the system’s state to a file and reloading it on program restart.
-                    try (PrintWriter writer = new PrintWriter(fileName)) {
 
-                        // Sort collection into Species
-                        PAC.getPetsCollection().sort(Comparator.comparing(Pet::getSpecies));
 
-                        // Write title
-                        writer.println("Pet Adoption Center");
+                    // Export Adopters
+                    try (PrintWriter writer = new PrintWriter(adoptersFilename)) {
+
                         // Write headers
-                        writer.println("PetID,Name,Species,Age,Breed,AdoptionStatus");
+                        writer.println("AdopterId,Name,ContactInfo");
+
+                        // Write collection into a csv file a row at a time
+                        for (Adopter adopter: PAC.getAdoptersCollection()){
+                            writer.printf("%s,%s,%s\n",
+                                    adopter.getAdopterId(),
+                                    adopter.getName(),
+                                    adopter.getContactInfo());
+                        }
+
+                        System.out.println("\nApp data saved successfully at " + adoptersFilename);
+
+                    } catch (IOException e) {
+                        System.out.println("\nError writing to file.");
+                        e.printStackTrace();
+                    }
+
+
+                    // Export Pets
+                    try (PrintWriter writer = new PrintWriter(petsFilename)) {
+
+                        // Write headers
+                        writer.println("PetID,Name,Species,Age,Breed,AdoptionStatus,AdopterID,A,B");
 
                         // Write collection into a csv file a row at a time
                         for(Pet pet: PAC.getPetsCollection()){
 
+                            String adopterId = "";
+                            Adopter adopter = PAC.findAdopterByPetId(pet.getPetId());
+
+                            if(adopter != null){
+                                adopterId = adopter.getAdopterId();
+                            }
+
                             if(pet instanceof Dog) {
+
                                 Dog dog = (Dog) pet; // Downcast to Dog
-                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s\n",
+                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                                         dog.getPetId(),
                                         dog.getName(),
                                         dog.getSpecies(),
                                         dog.getAge(),
                                         dog.getBreed(),
                                         dog.getAdoptionStatus(),
+                                        adopterId,
                                         dog.getTrainingLevel(),
                                         dog.getBarkingLevel());
                             } else if(pet instanceof Cat){
                                 Cat cat = (Cat) pet; // Downcast to Dog
-                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s\n",
+                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                                         cat.getPetId(),
                                         cat.getName(),
                                         cat.getSpecies(),
                                         cat.getAge(),
                                         cat.getBreed(),
                                         cat.getAdoptionStatus(),
+                                        adopterId,
                                         cat.isIndoor(),
                                         cat.getScratchingHabit());
                             } else if(pet instanceof Bird){
                                 Bird bird = (Bird) pet; // Downcast to Dog
-                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s\n",
+                                writer.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                                         bird.getPetId(),
                                         bird.getName(),
                                         bird.getSpecies(),
                                         bird.getAge(),
                                         bird.getBreed(),
                                         bird.getAdoptionStatus(),
+                                        adopterId,
                                         bird.isCanTalk(),
                                         bird.isCanFly());
                             } else {
@@ -961,10 +987,7 @@ public class AdoptionApp {
                             }
 
                         }
-                        System.out.println("\nApp data saved successfully at " + fileName);
-
-                        // Shutdown process end
-                        System.out.println("\nThank you for using Pet Adoption Center.");
+                        System.out.println("\nApp data saved successfully at " + petsFilename);
 
                     } catch (IOException e) {
                         System.out.println("\nError writing to file.");

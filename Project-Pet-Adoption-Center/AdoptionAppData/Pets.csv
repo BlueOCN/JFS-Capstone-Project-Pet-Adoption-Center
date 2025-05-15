@@ -1,9 +1,32 @@
 PetID,Name,Species,Age,Breed,AdoptionStatus,AdopterID,A,B
-4750ddf6-f35d-4f07-af9b-3a67c912991c,Goose,Bird,20,British Shorthair,ADOPTED,f070436a-3640-4301-b31c-71550de24ca2,false,true
-30abc460-fd21-4ae8-8f8c-c1670f4ed8f0,Freckles,Cat,6,Cocker Spaniel,ADOPTED,a33364f7-1e87-4b0d-ab65-5c9609b053b3,true,MEDIUM
-1aae4228-f4b1-4ad9-a6db-04788abd9e45,Fluffy,Cat,20,Canary,ADOPTED,22eb9e3c-4dcd-4e44-9acf-a74557a25442,true,HIGH
-57c6a5bd-720f-48a2-98de-29d0ba149467,Ziggy,Dog,5,Beagle,ADOPTED,2ef1d743-4c20-42ec-bcc2-c73c5965ea2f,HIGH,2
-ddc3164a-751d-4fed-966e-cc959457e3bd,Marley,Bird,8,Sphynx,AVAILABLE,,true,false
-f6435bb4-c258-42f9-9edb-c26ccaea6d01,Pebbles,Cat,8,Angora,PENDING_ADOPTION,,false,HIGH
-902f5354-a611-4cfa-8418-996314e020e0,Pebbles,Bird,5,Siamese,RETURNED,,false,false
-d1539506-1650-4b93-aa13-f61e5d458950,Phoebe,Dog,21,Weimaraner,PENDING_ADOPTION,,LOW,3
+dd5d2323-46fc-4a84-9637-ba79e7430090,Ruby,Dog,6,Macaw,ADOPTED,6a2b9803-7c53-444e-9b56-9bca95129688,MEDIUM,9
+03dec598-1ec6-4716-bd7c-fcca1c440682,Ruby,Dog,6,Chihuahua,ADOPTED,9871389d-b5c8-4ef8-879d-4d0743a0a741,HIGH,7
+239d6989-497d-43e8-93a2-33502d8decc4,Marley,Bird,15,Siamese,UNAVAILABLE,,false,false
+43d83f13-071b-4a49-a3a5-46b162050b56,Clover,Dog,18,Macaw,PENDING_ADOPTION,,MEDIUM,8
+94e48516-7da7-4877-9aaf-7c4852d9f02b,Tiger,Cat,18,Norwegian Forest,FOSTERED,,false,LOW
+f8ffa825-ff39-42b9-b347-10c7a60efd87,Tiger,Dog,17,Sphynx,ADOPTED,4d967876-9f21-4fb8-b662-141be8b3d3bf,MEDIUM,6
+4ac67dc8-c407-4652-b22f-37b20190bdaf,Clover,Bird,3,Cockatiel,ADOPTED,ce247605-38c7-4ec6-8d2c-3400091b4d5d,true,false
+18da39ee-6804-4a17-bd2c-4f41aad69dec,Mango,Dog,3,Exotic Shorthair,ADOPTED,0d8109ab-1362-4f26-b83b-462ad9ee872a,HIGH,4
+6da4428d-ca72-4a91-819d-2fa8312bf122,Marley,Bird,10,American Bulldog,PENDING_ADOPTION,,true,true
+8181ff03-78fb-4ccd-857e-081671a6b13e,Rocky,Dog,5,Beagle,UNAVAILABLE,,MEDIUM,3
+930a7b02-b6db-40d6-8a0f-af5fe2e792b0,Smokey,Dog,19,Akita,RETURNED,,MEDIUM,8
+eb34e5ea-f87c-411f-9331-66412d783604,Teddy,Cat,16,Husky,ADOPTED,163186b9-bc46-4c72-b136-e25669b715d4,true,LOW
+c6344eaa-57ed-4373-9c48-fd0517b01b32,Blaze,Dog,8,Samoyed,ADOPTED,d4f1af57-6511-4fd2-b085-4cd681a9d0f2,LOW,4
+7b19f930-c73c-4820-aab2-2dd59b42148b,Goose,Cat,3,Lovebird,UNAVAILABLE,,false,MEDIUM
+d7356d97-e68e-43aa-bf65-7ae93b0a25ad,Chester,Cat,17,Papillon,ADOPTED,2f022941-5438-464b-82b4-d1de7cabdd88,true,HIGH
+1fed10d1-7b24-4e1e-8e3a-306f45f4f2be,Ruby,Cat,9,Bichon Frise,ADOPTED,9433ae7d-1c04-40fe-a9b6-2fb9bfad3ca6,false,HIGH
+b70f621e-03ba-4f75-8126-66fc709cf508,Snickers,Dog,4,Dalmatian,ADOPTED,4ec0b74b-9863-4324-b5e7-066ca48918e1,LOW,4
+069f830a-4786-4118-8f7a-bbfe1bc3e734,Tango,Bird,1,Norwegian Forest,RETURNED,,false,true
+dd0bcb71-f400-4766-95ea-49be2ddfed3c,Scout,Dog,16,Bengal,PENDING_ADOPTION,,LOW,1
+2a30aaf9-1a10-439a-87bb-84bad5c87564,Loki,Bird,17,Cornish Rex,FOSTERED,,false,false
+cfdfbad9-372d-4e12-975d-d970e96717f9,Cupcake,Dog,14,Beagle,ADOPTED,226909a9-35e3-45fb-aca0-475ff303d520,MEDIUM,4
+0cf9867b-c05d-4d2d-aaeb-d7cd413070b4,Jasper,Cat,1,Russian Blue,PENDING_ADOPTION,,false,HIGH
+07dc5f83-a405-4b52-929f-f41b939595b9,Sunny,Cat,19,Basenji,PENDING_ADOPTION,,false,LOW
+4435b3cf-aab4-469c-a273-9bc15c7c79c8,Mittens,Cat,1,Cockatiel,ADOPTED,0d49af3c-007f-4360-8dc0-0346ea7d1530,true,LOW
+b6b6cc19-0862-4fa9-8673-783358007727,Boomer,Bird,4,Samoyed,PENDING_ADOPTION,,true,false
+ea7eec51-678f-4797-9cb0-cfba5abb25ff,Tango,Cat,4,Oriental Shorthair,RETURNED,,true,LOW
+3c6081fa-b15e-4125-95b8-b7a211b47995,Tiger,Cat,18,Scottish Fold,ADOPTED,ca181823-78bd-4c70-ac15-9690850cadb0,false,LOW
+98980f14-7679-4ca3-8263-1dab9b7421ee,Coco,Bird,8,Shiba Inu,AVAILABLE,,false,false
+c0b269e2-c2c9-43de-9bee-1bcb2d1c9443,Leo,Cat,17,Maltese,ADOPTED,2700b318-3d29-43ba-a7c0-dddaeb9cac1c,false,HIGH
+5d69e132-af61-44cb-9816-ed6f4dac336d,Raven,Dog,3,Weimaraner,ADOPTED,fd08fc00-4c05-4281-b9c0-2ec24760f30a,LOW,2
+04b42732-c7ae-46fd-80f9-1382fd064351,newpet,Dog,2,CocaCola,AVAILABLE,,LOW,3
